@@ -23,13 +23,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OQ5-3f-lGx">
-                                <rect key="frame" x="0.0" y="28" width="375" height="55"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="iSK-du-Jz2"/>
+                                    <constraint firstAttribute="height" constant="60" id="iSK-du-Jz2"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bWD-ns-6kE">
-                                <rect key="frame" x="16" y="125" width="96" height="30"/>
+                                <rect key="frame" x="16" y="130" width="96" height="30"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="A0r-dA-Uze"/>

@@ -15,6 +15,6 @@ internal struct Constants {
     internal static let VSPACE: CGFloat = 4.0
 
     internal static let MINIMUM_TEXTFIELD_WIDTH: CGFloat = 100.0
-    internal static let STANDARD_ROW_HEIGHT: CGFloat = 35.0
+    internal static let STANDARD_ROW_HEIGHT: CGFloat = 40.0
     internal static let FIELD_MARGIN_X: CGFloat = Constants.TagViewXPadding
 }
