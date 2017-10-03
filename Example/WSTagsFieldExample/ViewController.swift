@@ -82,10 +82,6 @@ extension ViewController {
             self.height.constant = height + 39
         }
         
-        tagsField.onDidChangeHeightFrom = { _, height in
-            self.height.constant = height
-        }
-        
         tagsField.onVerifyTag = { _, tagView in
             return false
         }

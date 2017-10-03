@@ -130,7 +130,6 @@ open class WSTagsField: UIScrollView {
      * frames to make sure theag view still fits.
      */
     open var onDidChangeHeightTo: ((WSTagsField, _ height: CGFloat) -> Void)?
-    open var onDidChangeHeightFrom: ((WSTagsField, _ height: CGFloat) -> Void)?
 
     // MARK: -
     public override init(frame: CGRect) {
@@ -507,11 +506,7 @@ extension WSTagsField {
         }
         setNeedsDisplay()
         
-        if from {
-            self.onDidChangeHeightFrom?(self, self.frame.height)
-        } else {
-            self.onDidChangeHeightTo?(self, self.frame.height)
-        }
+        self.onDidChangeHeightTo?(self, self.frame.height)
     }
 
     fileprivate func updatePlaceholderTextVisibility() {
