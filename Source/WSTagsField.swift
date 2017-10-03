@@ -25,6 +25,10 @@ open class WSTagsField: UIScrollView {
     open override var tintColor: UIColor! {
         didSet { tagViews.forEach { $0.tintColor = self.tintColor } }
     }
+    
+    open var tagColor: UIColor? {
+        didSet { tagViews.forEach { $0.tagColor = self.tagColor } }
+    }
 
     open var textColor: UIColor? {
         didSet { tagViews.forEach { $0.textColor = self.textColor } }
@@ -123,9 +127,10 @@ open class WSTagsField: UIScrollView {
     /**
      * Called when the view has updated its own height. If you are
      * not using Autolayout, you should use this method to update the
-     * frames to make sure the tag view still fits.
+     * frames to make sure theag view still fits.
      */
     open var onDidChangeHeightTo: ((WSTagsField, _ height: CGFloat) -> Void)?
+    open var onDidChangeHeightFrom: ((WSTagsField, _ height: CGFloat) -> Void)?
 
     // MARK: -
     public override init(frame: CGRect) {
@@ -174,16 +179,16 @@ open class WSTagsField: UIScrollView {
     }
 
     // MARK: - Adding / Removing Tags
-    open func addTags(_ tags: [String]) {
-        tags.forEach { addTag($0) }
+    open func addTags(_ tags: [(String,UIImage)]) {
+        tags.forEach { addTag($0.0, image: $0.1) }
     }
 
     open func addTags(_ tags: [WSTag]) {
         tags.forEach { addTag($0) }
     }
 
-    open func addTag(_ tag: String) {
-        addTag(WSTag(tag))
+    open func addTag(_ tag: String, image: UIImage = UIImage()) {
+        addTag(WSTag(tag, image: image))
     }
 
     open func addTag(_ tag: WSTag) {
@@ -194,6 +199,7 @@ open class WSTagsField: UIScrollView {
         let tagView = WSTagView(tag: tag)
         tagView.font = self.font
         tagView.tintColor = self.tintColor
+        tagView.tagColor = self.tagColor
         tagView.textColor = self.textColor
         tagView.selectedColor = self.selectedColor
         tagView.selectedTextColor = self.selectedTextColor
@@ -237,8 +243,8 @@ open class WSTagsField: UIScrollView {
         repositionViews()
     }
 
-    open func removeTag(_ tag: String) {
-        removeTag(WSTag(tag))
+    open func removeTag(_ tag: String, image: UIImage = UIImage()) {
+        removeTag(WSTag(tag, image: image))
     }
 
     open func removeTag(_ tag: WSTag) {
@@ -259,7 +265,7 @@ open class WSTagsField: UIScrollView {
         onDidRemoveTag?(self, removedTag)
 
         updatePlaceholderTextVisibility()
-        repositionViews()
+        repositionViews(from: true)
     }
 
     open func removeTags() {
@@ -414,7 +420,7 @@ extension WSTagsField {
         repositionViews()
     }
 
-    fileprivate func repositionViews() {
+    fileprivate func repositionViews(from: Bool = false) {
         let rightBoundary: CGFloat = self.bounds.width - padding.right
         let firstLineRightBoundary: CGFloat = rightBoundary
         var curX: CGFloat = padding.left
@@ -500,6 +506,12 @@ extension WSTagsField {
             self.scrollRectToVisible(textField.frame, animated: false)
         }
         setNeedsDisplay()
+        
+        if from {
+            self.onDidChangeHeightFrom?(self, self.frame.height)
+        } else {
+            self.onDidChangeHeightTo?(self, self.frame.height)
+        }
     }
 
     fileprivate func updatePlaceholderTextVisibility() {

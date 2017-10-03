@@ -10,6 +10,7 @@ import UIKit
 
 open class WSTagView: UIView {
     fileprivate let textLabel = UILabel()
+    fileprivate let image = UIImageView()
 
     open var displayText: String = "" {
         didSet {
@@ -33,6 +34,10 @@ open class WSTagView: UIView {
     }
 
     open override var tintColor: UIColor! {
+        didSet { updateContent(animated: false) }
+    }
+    
+    open var tagColor: UIColor! {
         didSet { updateContent(animated: false) }
     }
 
@@ -66,16 +71,27 @@ open class WSTagView: UIView {
 
     public init(tag: WSTag) {
         super.init(frame: CGRect.zero)
-        self.backgroundColor = tintColor
-        self.layer.cornerRadius = 3.0
+        self.backgroundColor = tagColor
+        self.layer.cornerRadius = 8.0
         self.layer.masksToBounds = true
 
         textColor = .white
         selectedColor = .gray
         selectedTextColor = .black
+        
+        let size: CGFloat = 26
+        
+        image.frame = CGRect(x: Constants.TagViewXPadding, y: Constants.TagViewYPadding - 3, width: size, height: size)
+        image.backgroundColor = UIColor(white: 244/255, alpha: 1)
+        image.clipsToBounds = true
+        image.layer.cornerRadius = size / 2
+        image.image = tag.image
+        image.contentMode = .scaleAspectFill
+        addSubview(image)
 
-        textLabel.frame = CGRect(x: Constants.TagViewXPadding, y: Constants.TagViewYPadding, width: 0, height: 0)
+        textLabel.frame = CGRect(x: Constants.TagViewXPadding + image.frame.origin.x, y: Constants.TagViewYPadding, width: 0, height: 0)
         textLabel.font = font
+        textLabel.textAlignment = .right
         textLabel.textColor = .white
         textLabel.backgroundColor = .clear
         addSubview(textLabel)
@@ -94,7 +110,7 @@ open class WSTagView: UIView {
     }
 
     fileprivate func updateColors() {
-        self.backgroundColor = selected ? selectedColor : tintColor
+        self.backgroundColor = selected ? selectedColor : tagColor
         textLabel.textColor = selected ? selectedTextColor : textColor
     }
 
@@ -123,7 +139,7 @@ open class WSTagView: UIView {
     // MARK: - Size Measurements
     open override var intrinsicContentSize: CGSize {
         let labelIntrinsicSize = textLabel.intrinsicContentSize
-        return CGSize(width: labelIntrinsicSize.width + 2 * Constants.TagViewXPadding,
+        return CGSize(width: 38 + labelIntrinsicSize.width + 2 * Constants.TagViewXPadding,
                       height: labelIntrinsicSize.height + 2 * Constants.TagViewYPadding)
     }
 
