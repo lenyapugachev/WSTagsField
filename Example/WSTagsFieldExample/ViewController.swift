@@ -52,7 +52,7 @@ class ViewController: UIViewController {
 
     @IBAction func touchTest(_ sender: UIButton) {
         i += 1
-        tagsField.addTag("test\(i)", image: UIImage(named: "2419256")!)
+        tagsField.addTag("idXXX", title: "test\(i)", image: UIImage(named: "2419256")!)
     }
 }
 

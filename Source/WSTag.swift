@@ -10,10 +10,12 @@ import Foundation
 
 public struct WSTag: Hashable {
 
+    public let tag: String
     public let text: String
     public let image: UIImage
 
-    public init(_ text: String, image: UIImage = UIImage()) {
+    public init(_ tag: String, _ text: String, image: UIImage = UIImage()) {
+        self.tag = tag
         self.text = text
         self.image = image
     }

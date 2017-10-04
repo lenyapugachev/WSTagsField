@@ -153,14 +153,6 @@ open class WSTagsField: UIScrollView {
         repositionViews()
     }
 
-    /// Take the text inside of the field and make it a Tag.
-    open func acceptCurrentTextAsTag() {
-        if let currentText = tokenizeTextFieldText(),
-           (self.textField.text?.isEmpty ?? true) == false {
-            self.addTag(currentText)
-        }
-    }
-
     open var isEditing: Bool {
         return self.textField.isEditing
     }
@@ -178,16 +170,16 @@ open class WSTagsField: UIScrollView {
     }
 
     // MARK: - Adding / Removing Tags
-    open func addTags(_ tags: [(String,UIImage)]) {
-        tags.forEach { addTag($0.0, image: $0.1) }
+    open func addTags(_ tags: [(String,String,UIImage)]) {
+        tags.forEach { addTag($0.0, title: $0.1, image: $0.2) }
     }
 
     open func addTags(_ tags: [WSTag]) {
         tags.forEach { addTag($0) }
     }
 
-    open func addTag(_ tag: String, image: UIImage = UIImage()) {
-        addTag(WSTag(tag, image: image))
+    open func addTag(_ tag: String, title: String, image: UIImage = UIImage()) {
+        addTag(WSTag(tag, title, image: image))
     }
 
     open func addTag(_ tag: WSTag) {
@@ -242,8 +234,8 @@ open class WSTagsField: UIScrollView {
         repositionViews()
     }
 
-    open func removeTag(_ tag: String, image: UIImage = UIImage()) {
-        removeTag(WSTag(tag, image: image))
+    open func removeTag(_ tag: String) {
+        removeTag(self.tags.filter { $0.tag == tag}.first!)
     }
 
     open func removeTag(_ tag: WSTag) {
@@ -269,21 +261,6 @@ open class WSTagsField: UIScrollView {
 
     open func removeTags() {
         self.tags.enumerated().reversed().forEach { index, _ in removeTagAtIndex(index) }
-    }
-
-    @discardableResult
-    open func tokenizeTextFieldText() -> WSTag? {
-        let text = self.textField.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
-        if text.isEmpty == false && (onVerifyTag?(self, text) ?? true) {
-            let tag = WSTag(text)
-            addTag(tag)
-
-            self.textField.text = ""
-            onTextFieldDidChange(self.textField)
-
-            return tag
-        }
-        return nil
     }
 
     // MARK: - Actions
@@ -528,17 +505,11 @@ extension WSTagsField: UITextFieldDelegate {
     }
 
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        tokenizeTextFieldText()
         return onShouldReturn?(self) ?? false
     }
 
     public func textField(_ textField: UITextField,
                           shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if string == delimiter {
-            tokenizeTextFieldText()
-            return false
-        }
-
         return true
     }
 
