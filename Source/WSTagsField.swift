@@ -264,7 +264,7 @@ open class WSTagsField: UIScrollView {
     }
 
     // MARK: - Actions
-    open func onTextFieldDidChange(_ sender: AnyObject) {
+    @objc open func onTextFieldDidChange(_ sender: AnyObject) {
         onDidChangeText?(self, textField.text)
     }
 

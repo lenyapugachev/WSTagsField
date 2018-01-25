@@ -7,8 +7,8 @@
 //
 
 internal struct Constants {
-    internal static let TagViewXPadding: CGFloat = 1.0
-    internal static let TagViewYPadding: CGFloat = 1.0
+    internal static let TagViewXPadding: CGFloat = 9.0
+    internal static let TagViewYPadding: CGFloat = 9.0
 
     internal static let TEXT_FIELD_HSPACE: CGFloat = Constants.TagViewXPadding
 
