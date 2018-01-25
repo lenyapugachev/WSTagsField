@@ -72,17 +72,17 @@ open class WSTagView: UIView {
     public init(tag: WSTag) {
         super.init(frame: CGRect.zero)
         self.backgroundColor = tagColor
-        self.layer.cornerRadius = 8.0
+        self.layer.cornerRadius = 17.0
         self.layer.masksToBounds = true
 
         textColor = .white
         selectedColor = .gray
         selectedTextColor = .black
         
-        let size: CGFloat = 26
+        let size: CGFloat = 30
         
-        image.frame = CGRect(x: Constants.TagViewXPadding, y: Constants.TagViewYPadding - 3, width: size, height: size)
-        image.backgroundColor = UIColor(white: 244/255, alpha: 1)
+        image.frame = CGRect(x: Constants.TagViewXPadding, y: Constants.TagViewYPadding - 1, width: size, height: size)
+        image.backgroundColor = UIColor.white
         image.clipsToBounds = true
         image.layer.cornerRadius = size / 2
         image.image = tag.image
