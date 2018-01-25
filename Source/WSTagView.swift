@@ -172,7 +172,7 @@ open class WSTagView: UIView {
     // MARK: - Laying out
     open override func layoutSubviews() {
         super.layoutSubviews()
-        textLabel.frame = bounds.insetBy(dx: Constants.TagViewXPadding, dy: Constants.TagViewYPadding)
+        textLabel.frame = bounds.insetBy(dx: Constants.TagViewXPadding + 5, dy: Constants.TagViewYPadding)
         if frame.width == 0 || frame.height == 0 {
             frame.size = self.intrinsicContentSize
         }
